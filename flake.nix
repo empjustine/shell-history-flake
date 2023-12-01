@@ -1,11 +1,12 @@
 {
-  inputs.nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
+  inputs.nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
 
   outputs = {
     self,
     nixpkgs-stable,
   }: {
     packages.x86_64-linux = let
+      selfPkgs = self.packages.x86_64-linux;
       pkgs = nixpkgs-stable.legacyPackages.x86_64-linux;
     in {
       atuin = pkgs.atuin;
@@ -31,19 +32,19 @@
       atuin-bash-ctrl-r = pkgs.buildEnv {
         name = "atuin-bash-ctrl-r";
         paths = [
-          self.packages.x86_64-linux.atuin-bash
+          selfPkgs.atuin-bash
           ./atuin-bash-ctrl-r
         ];
       };
       atuin-bash-up-arrow = pkgs.buildEnv {
         name = "atuin-bash-up-arrow";
         paths = [
-          self.packages.x86_64-linux.atuin-bash
+          selfPkgs.atuin-bash
           ./atuin-bash-up-arrow
         ];
       };
 
-      default = self.packages.x86_64-linux.atuin-bash;
+      default = selfPkgs.atuin-bash;
     };
   };
 }
